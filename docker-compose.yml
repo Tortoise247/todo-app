@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  mongodb_server:
+    hostname: server-host
+    build:
+      context: ./db
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+      - "27017:27017"
+    volumes:
+      - ./db/mongodb_data:/data/db
+    environment:
+      - NODE_ENV=development

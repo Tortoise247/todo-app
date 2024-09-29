@@ -95,3 +95,12 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# my_folder配下のすべてのファイルを無視
+db/mongodb_data/*
+
+# mongodb_dataフォルダ自体は無視しない
+!db/mongodb_data/
+
+# .gitignoreと特定のファイルやサブフォルダをGitで管理する場合は、そのファイルを明示的に無視しない
+!db/mongodb_data/.gitignore
