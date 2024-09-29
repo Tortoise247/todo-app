@@ -14,7 +14,7 @@ const cluster = process.env.MONGODB_CLUSTER;
 const dbname = process.env.MONGODB_DBNAME;
 
 // const uri = `mongodb+srv://${username}:${password}@${cluster}.mongodb.net/${dbname}?retryWrites=true&w=majority`;
-const uri =`mongodb://localhost:27017/${dbname}`;
+const uri = `mongodb://localhost:27017/${dbname}`;
 
 // mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
 mongoose.connect(uri)
@@ -79,6 +79,21 @@ app.put('/todos/:id', async (req, res) => {
         res.json(updatedTodo);
     } catch (error) {
         res.status(400).json({ message: error.message });
+    }
+});
+
+// TODOタスクの削除
+app.delete('/todos/:id', async (req, res) => {
+    try {
+        const todo = await Todo.findById(req.params.id);
+        if (!todo) {
+            return res.status(404).json({ message: 'タスクが見つかりません' });
+        }
+
+        await Todo.deleteOne({ _id: req.params.id }); // 修正箇所
+        res.json({ message: 'タスクが削除されました' });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
 });
 
